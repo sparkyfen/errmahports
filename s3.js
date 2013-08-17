@@ -42,6 +42,7 @@ exports.status = function (uuid, callback) {
 			if(error) {
 				return callback(error.message);
 			}
+			var data = JSON.parse(new Buffer(data.Body));
 			return callback(null, data);
 		});
 	} catch(e) {
