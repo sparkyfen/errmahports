@@ -18,7 +18,7 @@ exports.start = function() {
 		throw new ReferenceError('Missing server settings, please edit the settings file.');
 	}
 	app.configure(function () {
-		app.set('title', 'EdensWest');
+		app.set('title', 'ErrMahPorts');
 		app.use(express.methodOverride());
 		app.use(helmet.csp());
 		app.use(helmet.xframe());
