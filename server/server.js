@@ -1,5 +1,6 @@
 //Express JS for HTTP
 var express = require('express');
+var qs = require('querystring');
 var https = require('https');
 var settings = require('../settings.js');
 var helmet = require('helmet');
@@ -53,10 +54,13 @@ exports.createGets = function() {
 	app.get('/', function (request, response) {
 		response.send('This is the API Service for ErrMahPorts.');
 	});
+	/**
+	 * Request: host=192.168.0.1&ports
+	 */
 	app.get('/scan', function (request, response) {
 		Scanner.scanHost(request, function (error, data) {
 			if(error) {
-				response.json(500, data);
+				response.json(500, error);
 			}
 			response.json(data);
 		});
@@ -64,10 +68,10 @@ exports.createGets = function() {
 	app.get('/status', function (request, response) {
 		Scanner.status(request, function (error, data) {
 			if(error) {
-				response.json(500, data);
+				response.json(500, {message: error});
 			}
 			response.json(data);
-		})
+		});
 	});
 };
 return Server;

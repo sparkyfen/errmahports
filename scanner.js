@@ -11,7 +11,7 @@ exports.scanHost = function (request, callback) {
 	//Error:
 	//return callback({message: 'Fail', UID: 'N/A'});
 	//Success:
-	//return callback(null, {message: 'Success', UID: '1203090-1209382109-0980983'});
+	//return callback(null, {message: 'Success', UUID: '1203090-1209382109-0980983'});
 };
 
 /**
@@ -21,8 +21,8 @@ exports.scanHost = function (request, callback) {
  * @return {Function} callback  ^
  */
 exports.status = function (request, callback) {
-	var uid = request.query.uid;
-	s3.status(uid, function (error, data) {
+	var uuid = request.query.uuid;
+	s3.status(uuid, function (error, data) {
 		if(error) {
 			return callback(error);
 		}
