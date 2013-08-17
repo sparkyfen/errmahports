@@ -7,6 +7,9 @@ var Scanner = require('../scanner.js');
 var app = express();
 var Server = function() {}
 
+/**
+ * Starts the node server
+ */
 exports.start = function() {
 	var sslPort = settings.server.sslPort;
 	var serverPort = settings.server.serverPort;
@@ -35,11 +38,17 @@ exports.start = function() {
 	}
 };
 
+/**
+ * Stops the node server for whatever reason
+ */
 exports.stop = function() {
 	//TODO stop the server
 	console.log("Server has stopped.");
 };
 
+/**
+ * Creates the GET calls that we will allow by the API
+ */
 exports.createGets = function() {
 	app.get('/', function (request, response) {
 		response.send('This is the API Service for ErrMahPorts.');
