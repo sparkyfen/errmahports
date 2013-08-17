@@ -55,8 +55,19 @@ exports.createGets = function() {
 	});
 	app.get('/scan', function (request, response) {
 		Scanner.scanHost(request, function (error, data) {
+			if(error) {
+				response.json(500, data);
+			}
 			response.json(data);
 		});
+	});
+	app.get('/status', function (request, response) {
+		Scanner.status(request, function (error, data) {
+			if(error) {
+				response.json(500, data);
+			}
+			response.json(data);
+		})
 	});
 };
 return Server;

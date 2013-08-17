@@ -21,13 +21,13 @@ git clone [git-repo-url] /PATH/TO/CLONE
 cd /PATH/TO/CLONE
 sudo npm install
 mv settings.js.template settings.js
-<Edit settings.js file>
 <Create certs for SSL:>
 openssl genrsa -out key.pem 2048
 openssl req -new -key key.pem -out csr.pem
 openssl x509 -req -days 356 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
-node main.js
+<Edit settings.js file>
+cd server/ && node main
 ```
 
 
