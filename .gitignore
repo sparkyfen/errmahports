@@ -1,4 +1,7 @@
+settings.js
 node_modules/
+.keys/
+
 # Compiled source #
 ###################
 *.com

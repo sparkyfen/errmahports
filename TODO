@@ -1,0 +1,4 @@
+* Version Control on API
+* Setup S3 storage for return data of port scanner.
+* Setup some sort of caching system? (NGINX)
+* Setup port scanner (Mike)

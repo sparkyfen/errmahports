@@ -25,14 +25,13 @@
   "dependencies": {
     "express": "~3.0",
     "aws-sdk": "~v1.4.1",
-    "portastic": "0.0.1"
+    "portastic": "~0.0.1",
+    "helmet": "~0.1.0"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/brutalhonesty/errmahports.git"
-    }
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brutalhonesty/errmahports.git"
+  },
   "licenses": [
     {
       "name": "MIT License",
