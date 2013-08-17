@@ -1,0 +1,43 @@
+{
+  "name": "ErrMahPorts",
+  "description": "NodeJS Port Scanning Web Server",
+  "version": "0.0.1",
+  "keywords": [
+    "nmap",
+    "scanning",
+    "port-scanning"
+  ],
+  "maintainers": [
+    {
+      "name": "Adam Schodde",
+      "email": "sparky1010@gmail.com",
+      "web": "https://bitbucket.org/brutalhonesty"
+    },
+    {
+      "name": "Michael Cervantez",
+      "email": "mjcervantez@gmail.com",
+      "web": "https://github.com/itprofesmike"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/brutalhonesty/errmahports/issues"
+  },
+  "dependencies": {
+    "express": "~3.0",
+    "aws-sdk": "~v1.4.1",
+    "portastic": "0.0.1"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/brutalhonesty/errmahports.git"
+    }
+  ],
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://github.com/errmahports/#LICENSE"
+    }
+  ],
+  "homepage": "https://github.com/errmahports"
+}
