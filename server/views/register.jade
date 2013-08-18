@@ -12,6 +12,7 @@ html
 	script(type='text/javascript').
 		$(function () {
 			$('form#registerForm').submit(function () {
+				$('button').attr('disabled', true);
 				var firstName = $('input#firstName').val();
 				var lastName = $('input#lastName').val();
 				var email = $('input#email').val();
