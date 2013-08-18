@@ -127,7 +127,7 @@ function processSQSData(request, UUID, callback) {
 		// TODO check to make sure key is valid
 		var sqsSchema = require('../sqsSchema.json');
 		sqsSchema.uuid = UUID;
-		sqsSchema.requestor = key;
+		sqsSchema.requester = key;
 		sqsSchema.input.host = host;
 		sqsSchema.input.ports = ports;
 		return callback(null, sqsSchema);

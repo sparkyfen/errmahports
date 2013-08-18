@@ -65,7 +65,7 @@ exports.storeRequest = function (request, UUID, callback) {
 	};
 	s3.putObject(putOptions, function (error, data) {
 		if(error) {
-			return callback(error);
+			return callback(error.message);
 		}
 		return callback(null, {uuid: UUID});
 	});
@@ -78,7 +78,7 @@ exports.getRegistration = function (email, callback) {
 	};
 	s3.getObject(getOptions, function (error, data) {
 		if(error) {
-			return callback(error);
+			return callback(error.message);
 		}
 		return callback(null, data);
 	});
@@ -93,7 +93,7 @@ exports.storeRegistration = function (registerObj, email, callback) {
 	};
 	s3.putObject(putOptions, function (error, data) {
 		if(error) {
-			return callback(error);
+			return callback(error.message);
 		}
 		return callback(null, {message: 'Success', APIkey: registerObj.APIkey});
 	});

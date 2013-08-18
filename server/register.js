@@ -13,19 +13,11 @@ module.exports = function (request, response) {
 			lastName: lastName,
 			APIkey: utils.generateAPIKey(email)
 		};
-		s3.getRegistration(email, function (error, data) {
+		s3.storeRegistration(registerObj, email, function (error, data) {
 			if(error) {
 				response.json(500, {message: error});
 			}
-			if(data.RequestId !== undefined) {
-				response.json(500, {message: 'Account already exists.'});
-			}
-			s3.storeRegistration(registerObj, email, function (error, data) {
-				if(error) {
-					response.json(500, {message: error});
-				}
-				response.json(data);
-			});
+			response.json(data);
 		});
 	} catch(e) {
 		response.json(500, {message: e.message});

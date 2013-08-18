@@ -1,4 +1,5 @@
 var s3 = require('./s3.js');
+var exec = require('child_process').exec;
 var Scanner = function(){}
 
 /**
@@ -8,13 +9,16 @@ var Scanner = function(){}
  * @return {Function} callback  ^
  */
 exports.scanHost = function (sqsObj, callback) {
-	// TODO re-write this so it acually scans and returns the object
-	var testPortsResult = {ports: {}};
-	for(var portCounter = 0; portCounter < sqsObj.input.ports.length; portCounter++) {
-		testPortsResult['ports'][sqsObj.input.ports[portCounter]] = true;
-	}
-	return callback(null, testPortsResult);
-	//return object: {ports: {80: true, 443: true}};
+	var pythonCommand = '../portz.py ' + sqsObj.input.host + ' ' + sqsObj.input.ports.join(',');
+	var child = exec(pythonCommand, function (error, stdout, stderr) {
+		if(error) {
+			return callback(error);
+		}
+		if(stderr) {
+			return callback(stderr);
+		}
+		return callback(null, stdout.toString());
+	});
 };
 
 /**
