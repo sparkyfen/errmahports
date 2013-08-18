@@ -1,18 +1,23 @@
 var fs = require('fs');
 var environment = process.env.deployment;
 var s3BucketName = '';
+var sqsQueueName = '';
 switch (environment) {
 	case 'DEVO':
-		s3BucketName = ''
+		s3BucketName = '';
+		sqsQueueName = '';
 	break;
 	case 'BETA':
-		s3BucketName = ''
+		s3BucketName = '';
+		sqsQueueName = '';
 	break;
 	case 'GAMMA':
-		s3BucketName = ''
+		s3BucketName = '';
+		sqsQueueName = '';
 	break;
 	case 'PROD':
-		s3BucketName = ''
+		s3BucketName = '';
+		sqsQueueName = '';
 	break;
 	default:
 	break;
@@ -22,9 +27,18 @@ module.exports = {
 	s3: {
 		accessKey: '',
 		secretAccessKey: '',
-		region: 'us-east-1', // AWS S3 Region, EX: us-east-1
+		region: '', // AWS S3 Region, EX: us-east-1
 		bucketName: s3BucketName, // AWS S3 Bucket Name,
 		endPoint: 'https://s3.amazonaws.com/' // AWS S3 Endpoint, used for creating the url if need be
+	},
+	// Amazon SQS settings
+	sqs: {
+		accessKey: '',
+		secretAccessKey: '',
+		region: '', //AWS SQS Region, EX: us-east-1
+		endPoint: '', //AWS SQS End Point, EX: https://sqs.us-east-1.amazonaws.com/11111111111/
+		queueName: sqsQueueName, //AWS SQS Queue Name
+		apiVersion: '2012-11-05'
 	},
 	// Http(s) server settings
 	server: {
