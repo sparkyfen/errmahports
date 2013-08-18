@@ -1,11 +1,10 @@
 //Express JS for HTTP
-var express = require('express')
-  , http = require('http')
-  , path = require('path')
-  , qs = require('querystring')
-  , helmet = require('helmet')
-  , Scanner = require('../scanner.js')
-  , settings = require('../settings.js');
+var express = require('express');
+var qs = require('querystring');
+var https = require('https');
+var settings = require('../settings.js');
+var helmet = require('helmet');
+var Scanner = require('../scanner.js');
 var app = express();
 var Server = function() {}
 
@@ -13,29 +12,31 @@ var Server = function() {}
  * Starts the node server
  */
 exports.start = function() {
+	var sslPort = settings.server.sslPort;
 	var serverPort = settings.server.serverPort;
+	var sslOptions = settings.server.sslOptions;
+	if(sslPort === '' || serverPort === '' || sslOptions === '') {
+		throw new ReferenceError('Missing server settings, please edit the settings file.');
+	}
 	app.configure(function () {
-		app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "localhost");
-		app.set('port', process.env.OPENSHIFT_NODEJS_PORT || serverPort);
-		app.set('views', __dirname + '/views');
-		app.use(express.favicon());
-		app.use(express.logger('dev'));
+		app.set('title', 'ErrMahPorts');
+		app.use(express.methodOverride());
 		app.use(helmet.csp());
 		app.use(helmet.xframe());
 		app.use(helmet.contentTypeOptions());
-		app.use(express.bodyParser());
-		app.use(express.methodOverride());
 		app.use(app.router);
-		app.use(express.static(path.join(__dirname, 'public')));
 	});
-	// development only
-	if ('development' == app.get('env')) {
-	  app.use(express.errorHandler());
-	}
 	this.createGets();
-	http.createServer(app).listen(app.get('port'), app.get('ip'), function(){
-	  console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
-	});
+	if(sslOptions.key === null || sslOptions.cert === null) {
+		http.createServer(app).listen(serverPort, function () {
+			console.log("IT IS ADVISED THAT YOU RUN YOUR SERVER ON HTTPS!");
+			console.log("Server has started on port " + serverPort);
+		});
+	} else {
+		https.createServer(sslOptions, app).listen(sslPort, function () {
+			console.log("Server has started on port " + sslPort);
+		});
+	}
 };
 
 /**

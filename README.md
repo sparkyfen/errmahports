@@ -21,6 +21,11 @@ git clone [git-repo-url] /PATH/TO/CLONE
 cd /PATH/TO/CLONE
 sudo npm install
 cp settings.js.template settings.js
+<Create certs for SSL:>
+openssl genrsa -out key.pem 2048
+openssl req -new -key key.pem -out csr.pem
+openssl x509 -req -days 356 -in csr.pem -signkey key.pem -out cert.pem
+rm csr.pem
 <Edit settings.js file>
 cd server && deployment=DEVO|BETA|GAMMA|PROD node main
 ```

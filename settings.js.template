@@ -1,17 +1,35 @@
 var fs = require('fs');
+var environment = process.env.deployment;
+var s3BucketName = '';
+switch (environment) {
+	case 'DEVO':
+		s3BucketName = ''
+	break;
+	case 'BETA':
+		s3BucketName = ''
+	break;
+	case 'GAMMA':
+		s3BucketName = ''
+	break;
+	case 'PROD':
+		s3BucketName = ''
+	break;
+	default:
+	break;
+}
 module.exports = {
 	// Amazon S3 settings
 	s3: {
 		accessKey: '',
 		secretAccessKey: '',
-		region: '', // AWS S3 Region, EX: us-east-1
-		bucketName: '', // AWS S3 Bucket Name,
+		region: 'us-east-1', // AWS S3 Region, EX: us-east-1
+		bucketName: s3BucketName, // AWS S3 Bucket Name,
 		endPoint: 'https://s3.amazonaws.com/' // AWS S3 Endpoint, used for creating the url if need be
 	},
 	// Http(s) server settings
 	server: {
-		port: 3001,
-		sslPort: 3000,
+		serverPort: 3000,
+		sslPort: 3001,
 		sslOptions: {
 			key: fs.readFileSync('./.keys/key.pem').toString(),
 			cert: fs.readFileSync('./.keys/cert.pem').toString()
