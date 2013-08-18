@@ -4,7 +4,11 @@ var qs = require('querystring');
 var https = require('https');
 var settings = require('../settings.js');
 var helmet = require('helmet');
+var uuid = require('node-uuid');
 var Scanner = require('../scanner.js');
+var sqs = require('../sqs.js');
+var s3 = require('../s3.js');
+var utils = require('../utils.js');
 var app = express();
 var Server = function() {}
 
@@ -58,9 +62,25 @@ exports.createGets = function() {
 	 * Request: /scan?host=192.168.0.1&ports=80&ports=443
 	 */
 	app.get('/scan', function (request, response) {
-		Scanner.scanHost(request, function (error, data) {
+		// Create UUID for unique key
+		var UUID = uuid.v4();
+		// Process data to forumulate into queue object
+		processSQSData(request, UUID, function (error, sqsObj) {
 			if(error) {
-				response.json(500, error);
+				response.json(500, {message: error});
+			}
+			// Store message in SQS
+			sqs.storeMessage(sqsObj, function (error, data) {
+				if(error) {
+					response.json(500, {message: error});
+				}
+			});
+		});
+
+		var s3Obj = processS3Data(request);
+		s3.storeRequest(s3Obj, UUID, function (error, data) {
+			if(error) {
+				response.json(500, {message: error});
 			}
 			response.json(data);
 		});
@@ -74,4 +94,26 @@ exports.createGets = function() {
 		});
 	});
 };
+
+function processSQSData(request, UUID, callback) {
+	try {
+		// TODO expand to check to isURL or isIPV6Address
+		var host = utils.checkInput(utils.sanitizeInput(request.query.host, 'string'), 'IPv4');
+		var ports = request.query.ports;
+		var sqsSchema = require('../sqsSchema.json');
+		sqsSchema.uuid = UUID;
+		sqsSchema.input.host = host;
+		sqsSchema.input.ports = ports;
+		return callback(null, sqsSchema);
+	} catch(e) {
+		return callback(e.message);
+	}
+}
+
+function processS3Data(request) {
+	var s3Schema = require('../s3Schema.json');
+	s3Schema.input.host = request.query.host;
+	s3Schema.input.ports = request.query.ports;
+	return s3Schema
+}
 return Server;

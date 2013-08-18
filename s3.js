@@ -56,31 +56,19 @@ exports.status = function (uuid, callback) {
  * @param  {Function} callback The callback to send the data back up
  * @return {Function} callback ^
  */
-exports.storeRequest = function (request, callback) {
-	try {
-		// Check and sanitize input
-		// TODO expand to check to isURL or isIPV6Address
-		var host = utils.checkInput(utils.sanitizeInput(request.host, 'string'), 'IPv4');
-		var ports = request.ports;
-		var uuid = utils.checkInput(utils.sanitizeInput(request.uuid, 'string'), 'UUID');
-		var s3Schema = require('./s3Schema.json');
-		s3Schema.input.host = host;
-		s3Schema.input.ports = ports;
-		var putOptions = {
-			Bucket: s3BucketName,
-			Key: uuid,
-			Body: JSON.stringify(s3Schema),
-			ServerSideEncryption: 'AES256'
-		};
-		s3.putObject(putOptions, function (error, data) {
-			if(error) {
-				return callback(error);
-			}
-			return callback(null, {uuid: uuid});
-		});
-	} catch(e) {
-		return callback(e.message);
-	}
+exports.storeRequest = function (request, UUID, callback) {
+	var putOptions = {
+		Bucket: s3BucketName,
+		Key: UUID,
+		Body: JSON.stringify(request),
+		ServerSideEncryption: 'AES256'
+	};
+	s3.putObject(putOptions, function (error, data) {
+		if(error) {
+			return callback(error);
+		}
+		return callback(null, {uuid: UUID});
+	});
 };
 
 return S3;

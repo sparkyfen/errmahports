@@ -3,15 +3,17 @@ var Scanner = function(){}
 
 /**
  * Scans the incoming host and returns the result
- * @param  {Object} request  The http(s) request from the user.
+ * @param  {Object} sqsObj  The SQS message from Amazon SQS.
  * @param  {Function} callback	The callback function to return back up the "stack" 
  * @return {Function} callback  ^
  */
-exports.scanHost = function (request, callback) {
-	//Error:
-	//return callback({message: 'Fail', UID: 'N/A'});
-	//Success:
-	//return callback(null, {message: 'Success', UUID: '1203090-1209382109-0980983'});
+exports.scanHost = function (sqsObj, callback) {
+	// TODO re-write this so it acually scans and returns the object
+	var testPortsResult = {ports: {}};
+	for(var portCounter = 0; portCounter < sqsObj.input.ports.length; portCounter++) {
+		testPortsResult['ports'][sqsObj.input.ports[portCounter]] = true;
+	}
+	return callback(null, testPortsResult);
 };
 
 /**

@@ -27,7 +27,8 @@
     "aws-sdk": "~v1.4.1",
     "validator": "~1.4.0",
     "portastic": "~0.0.1",
-    "helmet": "~0.1.0"
+    "helmet": "~0.1.0",
+    "node-uuid": "~1.4.1"
   },
   "repository": {
     "type": "git",

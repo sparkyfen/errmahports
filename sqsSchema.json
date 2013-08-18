@@ -1,0 +1,13 @@
+{
+    "uuid": "",
+    "version": "0.1",
+    "input": {
+        "host": "",
+        "ports": []
+    },
+    "output": {
+        "host": "",
+        "ports": {},
+        "services": {}
+    } 
+}
