@@ -1,6 +1,7 @@
 var check = require('validator').check;
 var sanitize = require('validator').sanitize;
-
+var settings = require('./settings.js');
+var crypto = require('crypto');
 
 var Utils = function(){}
 
@@ -17,6 +18,7 @@ exports.sanitizeInput = function(input, type) {
 			return sanitize(input).toInt();
 		break;
 		case 'string':
+		case 'email':
 			var output = sanitize(input).trim();
 			output = sanitize(output).xss();
 			return output;
@@ -47,6 +49,9 @@ exports.checkInput = function(input, type) {
 			check(input, 'Please enter a valid string.').notEmpty();
 			return input;
 		break;
+		case 'email':
+			check(input, 'Please eneter a valid email.').isEmail();
+			return input;
 		case 'url':
 			check(input, 'Please enter a valid URL.').isUrl();
 			return input;
@@ -65,6 +70,10 @@ exports.checkInput = function(input, type) {
 			return null;
 		break;
 	}
+};
+
+exports.generateAPIKey = function(email) {
+	return crypto.createHmac('sha1', settings.server.cryptoKey).update(email).digest('hex');
 };
 
 return Utils;

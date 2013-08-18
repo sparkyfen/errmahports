@@ -1,0 +1,33 @@
+doctype 5
+html
+	head
+	title='Register Page'
+	script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+	body
+	form(id='registerForm')
+		input(type='text', placeholder='First Name', id='firstName')
+		input(type='text', placeholder='Last Name', id='lastName')
+		input(type='email', placeholder='email', id='email')
+		button(type='submit')='Submit'
+	script(type='text/javascript').
+		$(function () {
+			$('form#registerForm').submit(function () {
+				var firstName = $('input#firstName').val();
+				var lastName = $('input#lastName').val();
+				var email = $('input#email').val();
+				var query = 'firstName=' + firstName + '&lastName=' + lastName + '&email=' + email;
+				$.ajax({
+					type: 'POST',
+					url: '/registerMe',
+					data: query,
+					dataType: 'json',
+					success: function (data) {
+						$('body').html(data);
+					},
+					error: function (jqXhr, textStatus, errorThrown) {
+						$('body').html(jqXhr.responseText);
+					}
+				});
+				return false;
+			});
+		});

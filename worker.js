@@ -1,4 +1,3 @@
-// TODO Add worker that constantly checks queue for messages and stores in s3 as well as sending them off to scan
 var Scanner = require('./scanner.js');
 var sqs = require('./sqs.js');
 var s3 = require('./s3.js');

@@ -28,7 +28,8 @@
     "validator": "~1.4.0",
     "portastic": "~0.0.1",
     "helmet": "~0.1.0",
-    "node-uuid": "~1.4.1"
+    "node-uuid": "~1.4.1",
+    "jade": "~0.34.1"
   },
   "repository": {
     "type": "git",
@@ -37,8 +38,8 @@
   "licenses": [
     {
       "name": "MIT",
-      "url": "https://github.com/errmahports/#LICENSE"
+      "url": "https://github.com/brutalhonesty/errmahports#license"
     }
   ],
-  "homepage": "https://github.com/errmahports"
+  "homepage": "https://github.com/brutalhonesty/errmahports"
 }

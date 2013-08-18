@@ -48,6 +48,7 @@ module.exports = {
 			key: fs.readFileSync('./.keys/key.pem').toString(),
 			cert: fs.readFileSync('./.keys/cert.pem').toString()
 		},
-		logDir: 'logs/'
+		logDir: 'logs/',
+		cryptoKey: '' // Crypto key used to generate HMAC's
 	}
 };

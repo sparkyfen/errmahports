@@ -14,6 +14,7 @@ exports.scanHost = function (sqsObj, callback) {
 		testPortsResult['ports'][sqsObj.input.ports[portCounter]] = true;
 	}
 	return callback(null, testPortsResult);
+	//return object: {ports: {80: true, 443: true}};
 };
 
 /**

@@ -71,4 +71,19 @@ exports.storeRequest = function (request, UUID, callback) {
 	});
 };
 
+exports.storeRegistration = function (registerObj, email, callback) {
+	var putOptions = {
+		Bucket: s3BucketName,
+		Key: 'apiKeys/' + email,
+		Body: JSON.stringify(registerObj),
+		ServerSideEncryption: 'AES256'
+	};
+	s3.putObject(putOptions, function (error, data) {
+		if(error) {
+			return callback(error);
+		}
+		return callback(null, {message: 'Success', APIkey: registerObj.APIkey});
+	});
+};
+
 return S3;
