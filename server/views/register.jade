@@ -22,10 +22,10 @@ html
 					data: query,
 					dataType: 'json',
 					success: function (data) {
-						$('body').html(data);
+						$('body').html(JSON.stringify(data));
 					},
 					error: function (jqXhr, textStatus, errorThrown) {
-						$('body').html(jqXhr.responseText);
+						$('body').html(JSON.stringify(jqXhr.responseText));
 					}
 				});
 				return false;
