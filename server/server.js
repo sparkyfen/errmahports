@@ -1,7 +1,8 @@
 //Express JS for HTTP
 var express = require('express');
 var qs = require('querystring');
-var https = require('https');
+var http = require('http');
+var path = require('path');
 var settings = require('../settings.js');
 var register = require('./register.js');
 var helmet = require('helmet');
@@ -19,32 +20,32 @@ var Server = function() {}
 exports.start = function() {
 	var sslPort = settings.server.sslPort;
 	var serverPort = settings.server.serverPort;
-	var sslOptions = settings.server.sslOptions;
-	if(sslPort === '' || serverPort === '' || sslOptions === '') {
+	if(sslPort === '' || serverPort === '') {
 		throw new ReferenceError('Missing server settings, please edit the settings file.');
 	}
 	app.configure(function () {
 		app.set('title', 'ErrMahPorts');
 		app.set('views', __dirname + '/views');
-		//app.engine('jade', require('jade').__express);
+		app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "localhost");
+		app.set('port', process.env.OPENSHIFT_NODEJS_PORT || serverPort);
 		app.set('view engine', 'jade');
 		app.use(express.methodOverride());
+		app.use(express.favicon());
+		app.use(express.logger('dev'));
 		app.use(helmet.xframe());
 		app.use(express.bodyParser());
 		app.use(helmet.contentTypeOptions());
 		app.use(app.router);
+		app.use(express.static(path.join(__dirname, 'public')));
 	});
-	this.createGets();
-	if(sslOptions.key === null || sslOptions.cert === null) {
-		http.createServer(app).listen(serverPort, function () {
-			console.log("IT IS ADVISED THAT YOU RUN YOUR SERVER ON HTTPS!");
-			console.log("Server has started on port " + serverPort);
-		});
-	} else {
-		https.createServer(sslOptions, app).listen(sslPort, function () {
-			console.log("Server has started on port " + sslPort);
-		});
+	// development only
+	if('development' == app.get('env')) {
+		app.use(express.errorHandler());
 	}
+	this.createGets();
+	http.createServer(app).listen(app.get('port'), app.get('ip'), function(){
+		console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
+	});
 };
 
 /**

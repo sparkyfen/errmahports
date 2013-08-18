@@ -41,5 +41,8 @@
       "url": "https://github.com/brutalhonesty/errmahports#license"
     }
   ],
-  "homepage": "https://github.com/brutalhonesty/errmahports"
+  "homepage": "https://github.com/brutalhonesty/errmahports",
+  "scripts": {
+    "start": "sh ../data/myenv.sh"
+  }
 }

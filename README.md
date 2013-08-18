@@ -30,6 +30,12 @@ rm csr.pem
 cd server && deployment=DEVO|BETA|GAMMA|PROD node main
 ```
 
+API
+-------
+Scan:
+* https://<URL>/scan?host=<ipv4 address>&ports=80&ports=443&key=<API Key>
+Status:
+* https://<URL>/status?uuid=<UUID>
 
 License
 -------
