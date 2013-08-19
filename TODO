@@ -1,7 +1,8 @@
 * Version Control on API
-* Setup some sort of caching system? (NGINX)
-* Use keys for checking all requests
-* Make unit tests
-* Add package json pre-install scripts for nmap and python nmap module
-* Setup email service
-* Move node-validator to express middleware
+* Setup some sort of caching system (NGINX)
+* Use API keys for checking all requests
+* Add package.json pre-install scripts for nmap and python nmap module
+* Adding services that are attached to the ports AKA fingerprinting
+* Setup email service for forgotten API keys.
+* Moving node-validator to express middleware
+* Making unit tests

@@ -30,7 +30,7 @@ exports.storeMessage = function (sqsObj, callback) {
 			if(error) {
 				return callback(error);
 			}
-			return callback();
+			return callback(null);
 		});
 	});
 };

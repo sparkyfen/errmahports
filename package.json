@@ -43,7 +43,7 @@
   ],
   "homepage": "https://github.com/brutalhonesty/errmahports",
   "scripts": {
-    "preiinstall": "wget http://xael.org/norman/python/python-nmap/python-nmap-0.3.1.tar.gz /tmp && tar xzf /tmp/python-nmap-0.3.1.tar.gz && cd /tmp/python-nmap-0.3.1 && python setup.py install",
+    "pre-install": "wget http://xael.org/norman/python/python-nmap/python-nmap-0.3.1.tar.gz /tmp && tar xzf /tmp/python-nmap-0.3.1.tar.gz && cd /tmp/python-nmap-0.3.1 && python setup.py install",
     "start": "sh ../data/myenv.sh"
   }
 }

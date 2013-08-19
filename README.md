@@ -12,6 +12,8 @@ Tech
 
 * [node.js] - evented I/O for the backend
 * [Express] - fast node.js network app framework
+* [Amazon AWS: S3] - used to store and retrieve any amount of data, at any time, from anywhere on the web
+* [Amazon AWS: SQS] - fast, reliable, scalable, fully managed queue service
 
 Installation
 --------------
@@ -50,4 +52,6 @@ License
 
   [node.js]: http://nodejs.org
   [express]: http://expressjs.com
+  [Amazon AWS: S3]: http://aws.amazon.com/s3/
+  [Amazon AWS: SQS]: http://aws.amazon.com/sqs/
   [MIT]: http://www.tldrlegal.com/license/mit-license

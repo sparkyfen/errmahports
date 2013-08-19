@@ -73,21 +73,26 @@ exports.createGets = function() {
 		// Process data to forumulate into queue object
 		processSQSData(request, UUID, function (error, sqsObj) {
 			if(error) {
-				response.json(500, {message: error});
+				return response.json(500, {message: error});
 			}
 			// Send message to SQS
-			sqs.storeMessage(sqsObj, function (error, data) {
+			sqs.storeMessage(sqsObj, function (error) {
 				if(error) {
-					response.json(500, {message: error});
+					return response.json(500, {message: error});
 				}
-			});
-			// Store message in S3
-			var s3Obj = processS3Data(request);
-			s3.storeRequest(s3Obj, UUID, function (error, data) {
-				if(error) {
-					response.json(500, {message: error});
-				}
-				response.json(data);
+				// Process data to send to S3 storage
+				processS3Data(request, function (error, s3Obj) {
+					if(error) {
+						return response.json(500, {message: error});
+					}
+					// Store message in S3
+					s3.storeRequest(s3Obj, UUID, function (error, data) {
+						if(error) {
+							return response.json(500, {message: error});
+						}
+						response.json(data);
+					});
+				});
 			});
 		});
 	});
@@ -105,7 +110,7 @@ exports.createGets = function() {
 	});
 	/**
 	 * Register an account
-	 * Request: /register?firstName=foo&lastName=bar&email=foo@bar.com
+	 * Request: /registerMe?firstName=foo&lastName=bar&email=foo@bar.com
 	 */
 	app.get('/register', function (request, response) {
 		response.render('register');
@@ -136,10 +141,10 @@ function processSQSData(request, UUID, callback) {
 	}
 }
 
-function processS3Data(request) {
+function processS3Data(request, callback) {
 	var s3Schema = require('../s3Schema.json');
 	s3Schema.input.host = request.query.host;
 	s3Schema.input.ports = request.query.ports;
-	return s3Schema
+	return callback(null, s3Schema);
 }
 return Server;
